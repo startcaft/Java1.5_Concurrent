@@ -1,0 +1,37 @@
+1，org.apache.lucene.document.Field.Store 存储域枚举
+	YES------将域中的内容完全保存到索引中，方便进行文本的还原
+	NO------将域中的内容不保存到索引中，但是可以被索引，此时内容无法完全还原(Document.get()方法无效)
+	【被存储】和【被索引】是两个概念，【被存储是为了方便进行内容的还原】，【被索引是为了方便进行查找】
+	
+	
+
+2，org.apache.lucene.document.Field.Index 索引选项【API4.0以前适用】
+	ANALYZED------进行分词和索引，适用于标题，内容等域
+	NOT_ANALYZED------进行索引，但是不进行分词，如身份证号，姓名，ID等，适用于精确搜索的域
+	ANALYZED_NO_NORMS------进行分词但是不存储norms信息，这个norms中包括了创建索引的时间和权值等信息
+	NOT_ANALYZED_NO_NORMS------即不进行分词，也不存储norms信息
+	NO------不进行索引
+	
+	最佳实现
+	NOT_ANALYZED_NO_NORMS(YES)------标识符(主键，文件名)，电话号码，身份证号，姓名，日期
+	ANALYZED(YES)------文档标题和摘要
+	ANALYZED(NO)------文档正文
+	NO(YES)------文档类型，数据库主键(不进行索引)
+	NOT_ANALYZED(NO)------隐藏关键字
+	
+	
+
+3，文档(Document)和域(Field)的概念很重要
+	Document文档------相当于表中的一条记录
+	Field域------相当于表中的一个字段
+	
+	首先创建一个Document文档，之后为文档添加域Field
+	API4.0之后不需要设置索引选项，只需要设置存储选项
+	
+
+	
+4，IndexWirter索引写入对象，将Document写入到索引文件中
+
+
+
+5，IndexReader索引读取对象，可以有效的读取文档的数量
