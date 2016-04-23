@@ -1,0 +1,8 @@
+1，IndexWriter对象是Lucene提供的索引写入器。
+
+2，IndexWriter对象的创建依赖于IndexWriterConfig对象。
+	setOpenMode()用来判断是覆盖索引还是追加索引
+	OpenMode.CREATE------覆盖索引；
+	OpenMode.CREATE_OR_APPEND------追加索引；
+
+3，IndexWriter执行commit()和close()方法来结束索引的创建过程。
