@@ -1,0 +1,31 @@
+Lucene的索引中存储对象是以Document为存储单元的，对象中相关的属性值则存放到Field中。
+Lucene中的所有Field类都是IndexableField接口的实现。
+
+
+IndexableField接口提供了一些公用的方法：
+1，public String name()------获取file的名称
+2，public IndexableFieldType filedType()------获取Field的类型
+3，public float boost()------获取当前Field的权重(评分值)，新版本只有Field有评分的概念，可以设置对应的Field的权重值
+
+
+常见Field实现类有：
+1，IntField------主要对int类型的字段进行存储。使用SortField.Type.INT来排序比较，
+				如果要进行范围查询或过滤，需要采用NumericRangeQuery.newIntRange()
+2，LongField------主要针对long类型的字段进行存储。使用SortField.Type.LONG来排序比较，
+				如果要进行范围查询或过滤，需要采用NumericRangeQuery.newLongRange()。
+				【LongField字段常用来进行时间戳的存储】
+3，FloatField------主要对float类型的字段进行存储，排序采用SortField.Type.Float，
+				如果要进行范围查询或过滤，需要采用NumericRangeQuery.newFloatRange()。
+4，BinaryDocVluesField------只存储不共享值，如果需要共享值可以用SortedDocValuesField。
+5，NumericDocValuesField------用于数值类型，确切的说应该是【int类型和long类型】的Field的排序(预排序)，
+				需要在要排序的field后添加一个同名的NumericDocValuesField。
+6，SortedDocValuesField------用于String类型的Field的排序，
+				需要在StringField后添加同名的SortedDocValuesField
+7，StringField------用户String类型的字段的存储，
+				【StringField是只索引不分词】
+8，TextField------对String类型的字段进行存储，
+				TextField和StringField的不同是【TextField既索引又分词】
+9，StoredField------存储Field的值，可以用IndexSearcher.doc和IndexReader.document来获取此Field和存储的值
+
+10，FloatDocValuesField------用于浮点型类型的Field的排序(预排序)，
+				需要在排序的Field后添加一个同名的FloatDocValuesField
