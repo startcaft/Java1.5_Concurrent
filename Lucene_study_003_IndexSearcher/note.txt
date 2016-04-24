@@ -1,0 +1,30 @@
+搜索引擎的构建分为【索引内容】和【查询索引】两个大方面，这里介绍的是Lucene索引查询器即IndexSearcher对象
+
+1，IndexSearcher提供了对单个IndexReader的查询实现；
+
+2，我们对索引的查询，可以通过调用IndexSearcher.search(Query,n)或者search(Query,Filter,n)方法；
+
+3，在索引内容变动不大的情况下，可以对索引的搜索采用单个IndexSearcher共享的方式来提升性能；
+
+4，【如果索引有变动，我们需要使用DirectoryReader.openIfChanged(DirectoryReader)来获取新的IndexReader对象】；
+
+5，为了使查询延迟率低，我们最好使用近实时搜索的方法【此时我们的DirectoryReader的构建就要采用DirectoryReader.open(IndexWriter,boolean)】；
+
+6，IndexSearcher实例是完全【线程安全的】，这意味着多个线程可以并发调用任何方法。无需添加同步；
+
+
+
+
+IndexSearcher的创建过程：
+1，根据索引文件路径创建FSDirectory的实例，返回的FSDirectory实例跟系统和运行环境有关；
+		(不同的操作系统，甚至是不同的JRES环境返回的是不同的子类对象)
+		
+2，接着DirectoryReader根据获取到的FSDirectory实例读取索引文件并得到DirectoryReader对象；
+		(DirectoryReader的open方法返回实例的原理是：
+		【读取索引目录文件中的Segments文件内容，倒序遍历SegmentInfos并填充到SegmentReader(IndexReader的一种实现)数组，
+		并构建StandarDirecotyrReader的实例】)
+		
+3，有了IndexReader对象，IndexSearcher对象实例化就手到拈来了，new IndexSearcher(DirectoryReader)就可以得到其实例；
+		(如果想提高IndexSearcher的执行效率，还可以new IndexSearcher(DirectoryReader,ExcuterService)来实例化对象，
+		这样做的好处是为每块segment采用了分工查询，但是要注意IndexSearcher并不维护ExcuterService的生命周期，
+		需要自行调用ExcuterService的close/awaitTermination等方法)
