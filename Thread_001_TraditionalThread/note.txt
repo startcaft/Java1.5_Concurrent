@@ -1,0 +1,17 @@
+Java创建线程的两种传统方式：
+1，在Thread子类中覆盖run方法中编写线程要运行的代码
+		---涉及一个知识点：能否在run方法的声明上抛出interruptedException异常，
+			以便省略run方法内部对Thread.sleep()语句中的try...catch处理？
+
+2，在传递给Thread对象的Runnable对象的run方法中编写线程要运行的代码
+
+总结：
+	查看Thread类的run方法的源代码发现，上面两种方式都是在调用Thread对象的run方法，
+	如果Thread类的run方没有被子类覆盖，并且为该Thread对象设置了一个Runnable对象，该run方法会调用Runnable对象的run方法。
+
+问题：
+	如果在Thread子类覆盖的run方法中编写了运行代码，也为Thread子类对象传递了一个Runnable对象，
+	那么线程在运行时是会执行子类的run方法中的代码？还是会执行Runnable对象中的run方法中的代码？
+		------涉及到一个知识点：匿名内部类对象的构造方法如何调用父类的非默认构造方法。
+
+	多线程机制会提高程序的运行效率吗？为什么会有多线程下载？
