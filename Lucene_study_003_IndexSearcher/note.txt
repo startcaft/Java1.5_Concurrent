@@ -14,10 +14,9 @@
 
 
 
-
 IndexSearcher的创建过程：
 1，根据索引文件路径创建FSDirectory的实例，返回的FSDirectory实例跟系统和运行环境有关；
-		(不同的操作系统，甚至是不同的JRES环境返回的是不同的子类对象)
+		【不同的操作系统，甚至是不同的JRES环境返回的是不同的子类对象】
 		
 2，接着DirectoryReader根据获取到的FSDirectory实例读取索引文件并得到DirectoryReader对象；
 		(DirectoryReader的open方法返回实例的原理是：
