@@ -1,3 +1,6 @@
+Lucene索引的管理
+
+
 1，org.apache.lucene.document.Field.Store 存储域枚举
 	YES------将域中的内容完全保存到索引中，方便进行文本的还原
 	NO------将域中的内容不保存到索引中，但是可以被索引，此时内容无法完全还原(Document.get()方法无效)
@@ -27,11 +30,4 @@
 	
 	首先创建一个Document文档，之后为文档添加域Field
 	API4.0之后不需要设置索引选项，只需要设置存储选项
-	
 
-	
-4，IndexWirter索引写入对象，将Document写入到索引文件中
-
-
-
-5，IndexReader索引读取对象，可以有效的读取文档的数量
