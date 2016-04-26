@@ -1,0 +1,35 @@
+J2SE5.0之后，sun公司提供了一组原子操作类。
+AtomicXXX类是java.concurrent.util包下的类，用这些类来替代普通的类，可以保证其操作是原子性的。
+【以后所有需要同步的地方可以忘记synchronized关键字了，都可以通过这些类来完成，而且性能还比较好】
+
+
+
+
+线程池的概念和Executors类的作用
+1，使用Executors工具类来创建线程池，它返回的ExecutorService类的实例就可以看作是一个线程池
+	------Executors.newFixedThreadPool(int threadCount)
+		固定线程的线程池
+	------Executors.newFixedThreadPool()
+		线程池中的线程数量是动态变化的
+	------Executors.newSingleThreadExecutor()
+		永远保证线程池固定只有一个线程
+	
+2，使用ExecutorService实例的execute(Runnable)方法向线程池中添加一个任务
+
+3，关闭线程池
+	------ExecutorService.shutdown()
+		所有任务完成后，关闭线程池
+	------ExecutorService.shutdownNow()
+		立即关闭线程池
+
+线程池在创建的时候确定线程的个数，可以往池子中分配N个任务，
+会为每个任务分配一个线程，只要池子中的任务没有结束，线程就不会停止。
+
+【这是一个概念的转变】
+【java5之前，是把任务分配给一个指定的线程去做】
+【java5之后，是把任务丢到一个线程池中，有空闲的线程就执行任务，没有空闲的线程就等待】
+
+还提供了用线程池启动定时器
+1，调用ScheduleExecutorService的schedule方法，返回的ScheduledFuture对象可以取消任务。
+
+2，支持间隔重复任务的定时任务，不直接支持绝对定时方式，需要转换成相对时间方式。
