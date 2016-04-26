@@ -1,0 +1,14 @@
+Query抽象类，其他几个常用的子类的用法
+
+1，TermRangeQuery	指定文档域的范围查询
+
+2，NumericRangeQuery		数字的范围查询
+
+3，PrefixQuery		字符串开头查询
+
+4，BooleanQuery【重要】	组合查询
+	------通过多个Query对象，组合成一个BooleanQuery对象。
+	------在添加Query对象时，注意BooleanClause.Occur枚举
+			1，MUST，相当于sql中的and
+			2，SHOULD，相当于sql中的or
+			3，MUST_NOT，相当于not
