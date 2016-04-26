@@ -1,0 +1,10 @@
+Lucene对索引的检索
+
+查询使用到的是Query类型，它包含很多子类类型。
+TermQuery，针对指定文档域的精确查询
+	------无法使用查询表达式。
+	
+
+使用QueryParser，查询解析器来查询是比较常见的方法，它在查询的是会依赖于一个Analyzer对象，
+这个Analyzer是Lucene比较强大的东东，分词器，开发者可以提供自己的实现来实现自己的分词检索逻辑。
+QueryParser的parse(string)方法将查询表达式封装成一个Query类的实例，然后再使用IndexSearcher的searcher方法进行检索。
