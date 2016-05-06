@@ -1,0 +1,22 @@
+JDK5中的Lock和Condition类来实现线程同步通信，用它们来替代Object锁和Synchornized关键字。
+
+1，Lock比较传统线程模型中的synchornized方式 更加面向对象，与生活的中的锁类似，
+	锁本身也是一个对象。【两个线程执行的代码片段要实现同步互斥的效果，它们必须用同一个Lock对象】。
+	【锁是要尚在线程要操作的资源的类的内部方法中的，而不是线程中】。
+	
+2，读写锁：
+	【Lock分为读锁和写锁】，
+	【多个读锁不互斥】，【读锁和写锁互斥】，【写锁与写锁互斥】
+	
+比较好的做法是，在要同步的代码片段前使用Lock.lock()方法上锁，
+在片段代码运行之后使用Lock.unlock()，如果片段代码在运行中抛出异常怎么办？ 不会执行到unlock()方法，
+所以需要将同步的代码片段放在try{}语句块中，finally{}中解锁。
+
+可以参照JDK API中的ReentrantReadWriteLock类的一个实例，会有很好的启发。
+
+
+
+Condition的功能类似于传统多线程技术中的Object.wait和notify的功能。
+【Condition是基于Lock对象之上的】
+Condition比wait和notify更强大一些，具体请参考JDK文档中的例子(一个阻塞队列的实现)
+【可以实现多路Condition】
